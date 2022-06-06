@@ -25,7 +25,7 @@
                   # haskell-language-server = {};
                 };
                 contentAddressed = {
-                  enable = true;
+                  enable = false;
                 };
               };
           };
