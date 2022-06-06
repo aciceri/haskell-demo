@@ -1,8 +1,8 @@
 {
   description = "Toy project made up only to test haskell.nix";
 
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
-  # inputs.haskellNix.url = "github:mlabs-haskell/haskell.nix/tree/aciceri/ca";
+  #inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
+  inputs.haskellNix.url = "github:mlabs-haskell/haskell.nix/aciceri/ca";
   inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-compat = {
@@ -24,9 +24,9 @@
                   # hlint = {};
                   # haskell-language-server = {};
                 };
-                #   contentAddressed = {
-                #     enable = true;
-                #   };
+                contentAddressed = {
+                  enable = true;
+                };
               };
           };
           pkgs = import nixpkgs {
