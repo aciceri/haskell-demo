@@ -1,7 +1,8 @@
 {
   description = "Toy project made up only to test haskell.nix";
 
-  inputs.haskellNix.url = "/home/ccr/mlabs/haskell.nix";
+  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
+  # inputs.haskellNix.url = "github:mlabs-haskell/haskell.nix/tree/aciceri/ca";
   inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-compat = {
