@@ -11,45 +11,47 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, haskellNix, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        overlay = self: _: {
-          hsPkgs =
-            self.haskell-nix.project' {
-              src = ./.;
-              compiler-nix-name = "ghc8107";
-              shell.tools = {
-                cabal = { };
-                # hlint = {};
-                # haskell-language-server = {};
+    (flake-utils.lib.eachDefaultSystem
+      (system:
+        let
+          overlay = self: _: {
+            hsPkgs =
+              self.haskell-nix.project' {
+                src = ./.;
+                compiler-nix-name = "ghc8107";
+                shell.tools = {
+                  cabal = { };
+                  # hlint = {};
+                  # haskell-language-server = {};
+                };
+                #   contentAddressed = {
+                #     enable = true;
+                #   };
               };
-            #   contentAddressed = {
-            #     enable = true;
-            #   };
-            };
-        };
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            haskellNix.overlay
-            overlay
-          ];
-        };
-        flake = pkgs.hsPkgs.flake { };
-      in
-      flake // {
-        packages = {
-          default = flake.packages."hello:exe:executable";
-        };
-        apps = {
-          default = flake-utils.lib.mkApp {
-            drv = flake.packages."hello:exe:executable";
-            exePath = "/bin/executable";
           };
-        };
-        hydraJobs = {
-          build = flake.packages."hello:exe:executable";
-        };
-      }
-    );
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              haskellNix.overlay
+              overlay
+            ];
+          };
+          flake = pkgs.hsPkgs.flake { };
+        in
+        flake // {
+          packages = {
+            default = flake.packages."hello:exe:executable";
+          };
+          apps = {
+            default = flake-utils.lib.mkApp {
+              drv = flake.packages."hello:exe:executable";
+              exePath = "/bin/executable";
+            };
+          };
+        }
+      )) // {
+      hydraJobs = {
+        build = flake.packages."hello:exe:executable";
+      };
+    };
 }
