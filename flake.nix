@@ -11,7 +11,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, haskellNix, ... }@inputs:
-    (flake-utils.lib.eachDefaultSystem
+    with flake-utils.lib; eachSystem (with system; [ x86_64-linux ])
       (system:
         let
           overlay = self: _: {
@@ -48,10 +48,8 @@
               exePath = "/bin/executable";
             };
           };
-        }
-      )) // {
-      hydraJobs = {
-        build = flake.packages."hello:exe:executable";
-      };
-    };
+          hydraJobs = {
+            build = flake.packages."hello:exe:executable";
+          };
+        });
 }
