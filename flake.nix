@@ -23,9 +23,9 @@
                 # hlint = {};
                 # haskell-language-server = {};
               };
-              contentAddressed = {
-                enable = true;
-              };
+            #   contentAddressed = {
+            #     enable = true;
+            #   };
             };
         };
         pkgs = import nixpkgs {
