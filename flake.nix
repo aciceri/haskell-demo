@@ -35,6 +35,7 @@
               haskellNix.overlay
               overlay
             ];
+            config.contentAddressedByDefault = true;
           };
           flake = pkgs.hsPkgs.flake { };
         in
@@ -49,7 +50,8 @@
             };
           };
           hydraJobs = {
-            build = flake.packages."hello:exe:executable";
+            build = pkgs.hello;
+            #build = flake.packages."hello:exe:executable";
           };
         });
 }
